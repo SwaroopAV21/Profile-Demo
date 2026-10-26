@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: portfolio
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: frontend }
+  template:
+    metadata:
+      labels: { app: frontend }
+    spec:
+      nodeSelector: { role: frontend }
+      containers:
+        - name: frontend
+          image: swaroopav/my-portfolio:main
+          ports: [{ containerPort: 5173 }]
+          readinessProbe:
+            httpGet: { path: /, port: 5173 }
+            initialDelaySeconds: 3
+            periodSeconds: 5

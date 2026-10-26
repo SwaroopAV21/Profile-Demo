@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend                  # nginx's proxy_pass http://backend:8080 keeps working
+  namespace: portfolio
+spec:
+  selector: { app: backend }     # matches primary AND backup pods
+  ports: [{ port: 8080, targetPort: 8080 }]

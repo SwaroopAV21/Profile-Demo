@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: portfolio
+spec:
+  replicas: 4
+  selector:
+    matchLabels: { app: db }
+  template:
+    metadata:
+      labels: { app: db }
+    spec:
+      nodeSelector: { role: db }
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels: { app: db }
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: postgres
+          image: swaroopav/postgresdb:main
+          ports: [{ containerPort: 5432 }]
+          envFrom:
+            - secretRef: { name: db-secret }
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres", "-d", "portfolio_db"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
