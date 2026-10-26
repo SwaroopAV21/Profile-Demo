@@ -19,27 +19,16 @@ jobs:
           
           curl -f http://localhost:5173
 
-          echo " ==================="
-          curl -i http://localhost:5173/api/projects/featured
-
       - name: Open public link
         run: |
           curl -L -o cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
           chmod +x cloudflared
           ./cloudflared tunnel --url http://localhost:5173 2>&1 | tee tunnel.log &
           sleep 15
-          
+
           URL=$(grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' tunnel.log | head -1)
           echo "Tunnel: $URL"
-
-          echo "=== API through the tunnel ==="
-          curl -s -o /dev/null -w "%{http_code}\n" "$URL/api/projects/featured"
-
-          echo "===================================="
-          curl -i http://localhost:5173/api/projects/featured
-           echo "===================================="
-
-          sleep 180
+          sleep 1500
 
       - name: Stop containers
         if: always()
@@ -47,6 +36,5 @@ jobs:
           docker compose ps
 
           docker compose logs backend
-
 
           docker compose down
