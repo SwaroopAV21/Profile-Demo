@@ -26,7 +26,7 @@ jobs:
           ./cloudflared tunnel --url http://localhost:5173 2>&1 | tee tunnel.log &
           sleep 15
           grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' tunnel.log | head -1
-          sleep 1500
+          sleep 180
 
       - name: Stop containers
         if: always()
