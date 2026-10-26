@@ -28,7 +28,12 @@ jobs:
           chmod +x cloudflared
           ./cloudflared tunnel --url http://localhost:5173 2>&1 | tee tunnel.log &
           sleep 15
-          grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' tunnel.log | head -1
+          
+          URL=$(grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' tunnel.log | head -1)
+          echo "Tunnel: $URL"
+
+          echo "=== API through the tunnel ==="
+          curl -s -o /dev/null -w "%{http_code}\n" "$URL/api/projects/featured"
 
           echo "===================================="
           curl -i http://localhost:5173/api/projects/featured
