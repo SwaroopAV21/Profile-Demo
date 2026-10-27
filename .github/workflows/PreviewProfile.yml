@@ -28,7 +28,7 @@ jobs:
 
           URL=$(grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' tunnel.log | head -1)
           echo "Tunnel: $URL"
-          sleep 1500
+          sleep 180
 
       - name: Stop containers
         if: always()
