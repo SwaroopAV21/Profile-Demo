@@ -30,7 +30,7 @@ services:
         condition: service_healthy
     
   middleware:
-    image: swaroopav/middleware:main
+    image: swaroopav/gomiddleware:main
     container_name: middleware
     restart: unless-stopped
     environment:
