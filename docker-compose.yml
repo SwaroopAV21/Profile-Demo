@@ -34,13 +34,13 @@ services:
     container_name: middleware
     restart: unless-stopped
     environment:
-      - BASE_URL: http://localhost:8080
-      - DB_URL: localhost
-      - DB_PORT: 5432
-      - DB_NAME: messaging_queue
-      - POSTGRES_DB: messaging_queue
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASS: root
+      BASE_URL: http://localhost:8080
+      DB_URL: db
+      DB_PORT: 5432
+      DB_NAME: messaging_queue
+      POSTGRES_DB: messaging_queue
+      POSTGRES_USER: postgres
+      POSTGRES_PASS: root
     ports:
       - "8081:8081"
     depends_on:
