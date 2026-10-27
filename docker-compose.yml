@@ -1,7 +1,7 @@
 services:
   db:
-    image: swaroopav/postgresdb:main
-    container_name: postgresdb
+    image: swaroopav/db:main
+    container_name: db
     restart: unless-stopped
     environment:
       POSTGRES_DB: portfolio_db
@@ -14,8 +14,8 @@ services:
       retries: 10
 
   backend:
-    image: swaroopav/java-profile:main
-    container_name: java-profile
+    image: swaroopav/backend:main
+    container_name: backend
     restart: unless-stopped
     environment:
       DB_HOST: db
@@ -28,10 +28,27 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    
+  middleware:
+    image: swaroopav/middleware:main
+    container_name: middleware
+    restart: unless-stopped
+    environment:
+      - BASE_URL= http://localhost:8080
+      - DB_URL = "localhost"
+      - DB_PORT = "5432"
+      - DB_NAME = "messaging_queue"
+      - POSTGRES_DB = "messaging_queue"
+      - POSTGRES_USER = "postgres"
+      - POSTGRES_PASS = "root"
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
 
   frontend:
-    image: swaroopav/my-portfolio:main
-    container_name: my-portfolio
+    image: swaroopav/frontend:main
+    container_name: frontend
     restart: unless-stopped
     ports:
       - "5173:5173"

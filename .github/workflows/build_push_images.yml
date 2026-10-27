@@ -1,0 +1,36 @@
+name: Build All Applications
+run-name: ${{ inputs.run-name || 'Building all applications' }} 
+
+
+on:
+    workflow_dispatch:
+        inputs:
+            run-name:
+                description: 'For Custom run name with versions'
+                required: false
+                type: string
+                default: 'Build FrontEnd, Middleware, Backend'
+
+permissions:
+    contents: read
+    packages: write
+
+jobs:
+  build_frontend:
+    uses: SwaroopAV21/portfolio-frontend/.github/workflows/build.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build_middleware:
+    uses: SwaroopAV21/messaging-queue/.github/workflows/build.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build_backend:
+    uses: SwaroopAV21/javaProfile/.github/workflows/build.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+                
