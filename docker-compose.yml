@@ -34,7 +34,7 @@ services:
     container_name: middleware
     restart: unless-stopped
     environment:
-      BASE_URL: http://localhost:8080
+      BASE_URL: http://backend:8080
       DB_URL: db
       DB_PORT: 5432
       DB_NAME: messaging_queue
