@@ -10,6 +10,22 @@ on:
                 required: false
                 type: string
                 default: 'Build FrontEnd, Middleware, Backend'
+            build-frontend:
+                description: 'To only pick frontend to build & push'
+                required: false
+                type: boolean
+                default: false
+            build-middleware:
+                description: 'To only pick middleware to build & push'
+                required: false
+                type: boolean
+                default: false
+            build-backend:
+                description: 'To only pick backend, DB to build & push'
+                required: false
+                type: boolean
+                default: false
+
 
 permissions:
     contents: read
