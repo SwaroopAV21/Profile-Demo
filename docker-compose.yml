@@ -35,6 +35,7 @@ services:
     restart: unless-stopped
     environment:
       BASE_URL: http://backend:8080
+      CORS_ORIGIN: http://frontend:5173
       DB_URL: db
       DB_PORT: 5432
       DB_NAME: messaging_queue
