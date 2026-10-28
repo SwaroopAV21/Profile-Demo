@@ -37,4 +37,11 @@ jobs:
 
           docker compose logs backend
 
+          echo ===============================================================
+          docker compose logs frontend 
+
+
+          echo ===============================================================
+          docker compose logs middleware
+
           docker compose down
