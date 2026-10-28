@@ -14,17 +14,17 @@ on:
                 description: 'To only pick frontend to build & push'
                 required: false
                 type: boolean
-                default: false
+                default: true
             build-middleware:
                 description: 'To only pick middleware to build & push'
                 required: false
                 type: boolean
-                default: false
+                default: true
             build-backend:
                 description: 'To only pick backend, DB to build & push'
                 required: false
                 type: boolean
-                default: false
+                default: true
 
 
 permissions:
@@ -33,6 +33,7 @@ permissions:
 
 jobs:
   build_frontend:
+    if: ${{ inputs.build-frontend == true}}
     uses: SwaroopAV21/portfolio-frontend/.github/workflows/build.yml@main
     with:
       workflow_callType: 'workflow_call'
@@ -41,6 +42,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_middleware:
+    if: ${{ inputs.build-middleware == true}}
     uses: SwaroopAV21/messaging-queue/.github/workflows/build.yml@main
     with:
       workflow_callType: 'workflow_call'
@@ -49,6 +51,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_backend:
+    if: ${{ inputs.build-backend == true}}
     uses: SwaroopAV21/javaProfile/.github/workflows/build.yml@main
     with:
       workflow_callType: 'workflow_call'
